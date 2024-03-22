@@ -1,4 +1,9 @@
-pytorch
+torch
+torchvision
+matplotlib
+opencv-python
+tqdm
+gdown
 numpy
 scipy
 trimesh

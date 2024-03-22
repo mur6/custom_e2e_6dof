@@ -1,0 +1,5 @@
+__pycache__/
+.venv/
+.mypy_cache/
+PROPS-Pose-Dataset/
+PROPS-Pose-Dataset.tar.gz
