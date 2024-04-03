@@ -18,5 +18,12 @@
         "titleBar.inactiveBackground": "#5ed33999",
         "titleBar.inactiveForeground": "#15202b99"
     },
-    "peacock.color": "#5ed339"
+    "peacock.color": "#5ed339",
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        }
+    },
+    "ruff.organizeImports": false
 }
