@@ -45,10 +45,15 @@ def main():
     print(type(models_pcd))
     print(f"models_pcd: {models_pcd.shape}")
     train_dataset, val_dataset = get_data()
+    print("===========================")
     for data_dict in train_dataset:
         for key, val in data_dict.items():
             print(f"{key}: {val.shape} {val.dtype}")
         break
+    # objs_id = data_dict["objs_id"]
+    # print(f"objs_id: {objs_id}")
+    # bbx = data_dict["bbx"]
+    # print(f"bbx: {bbx}")
     # with Path("models_pcd.pkl").open("wb") as f:
     #     pickle.dump(self.models_pcd, f)
 
