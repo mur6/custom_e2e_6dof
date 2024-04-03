@@ -1,10 +1,7 @@
 import os
 import zipfile
 
-_P4_FILES = [
-    "pose_cnn.py",
-    "pose_estimation.ipynb"
-]
+_P4_FILES = ["pose_cnn.py", "pose_estimation.ipynb"]
 
 
 def make_p4_submission(assignment_path, uniquename=None, umid=None):
@@ -21,8 +18,8 @@ def _make_submission(
     print("Writing zip file to: ", zip_path)
     with zipfile.ZipFile(zip_path, "w") as zf:
         for filename in file_list:
-            if filename.startswith('rob599/'):
-                filename_out = filename.split('/')[-1]
+            if filename.startswith("rob599/"):
+                filename_out = filename.split("/")[-1]
             else:
                 filename_out = filename
             in_path = os.path.join(assignment_path, filename)
