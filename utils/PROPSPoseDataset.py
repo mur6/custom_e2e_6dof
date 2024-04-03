@@ -221,7 +221,7 @@ class PROPSPoseDataset(Dataset):
             data_dict["depth"] = np.array(im)[np.newaxis, :]
         ## TODO data-augmentation of depth
         assert len(objs_dict) <= self.max_instance_num
-        objs_id = np.zeros(self.max_instance_num, dtype=np.uint8)
+        objs_id = np.zeros(self.max_instance_num, dtype=np.int16)
         label = np.zeros((self.max_instance_num + 1, self.H, self.W), dtype=bool)
         bbx = np.zeros((self.max_instance_num, 4))
         RTs = np.zeros((self.max_instance_num, 3, 4))
