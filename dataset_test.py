@@ -40,12 +40,15 @@ def get_data():
 
 def main():
     # load models_pcd.pkl
-    with Path("models_pcd.pkl").open("rb") as f:
+    with Path("checkpoints/models_pcd.pkl").open("rb") as f:
         models_pcd = pickle.load(f)
     print(type(models_pcd))
-    print(f"checkpoints/models_pcd: {models_pcd.shape}")
+    print(f"models_pcd: {models_pcd.shape}")
     train_dataset, val_dataset = get_data()
-
+    for data_dict in train_dataset:
+        for key, val in data_dict.items():
+            print(f"{key}: {val.shape} {val.dtype}")
+        break
     # with Path("models_pcd.pkl").open("wb") as f:
     #     pickle.dump(self.models_pcd, f)
 
