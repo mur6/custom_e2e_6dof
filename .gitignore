@@ -3,3 +3,4 @@ __pycache__/
 .mypy_cache/
 PROPS-Pose-Dataset/
 PROPS-Pose-Dataset.tar.gz
+/checkpoints/
