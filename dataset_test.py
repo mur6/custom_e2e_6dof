@@ -1,4 +1,5 @@
-import os
+from pathlib import Path
+import pickle
 import time
 
 import matplotlib.pyplot as plt
@@ -38,7 +39,15 @@ def get_data():
 
 
 def main():
-    get_data()
+    # load models_pcd.pkl
+    with Path("models_pcd.pkl").open("rb") as f:
+        models_pcd = pickle.load(f)
+    print(type(models_pcd))
+    print(f"checkpoints/models_pcd: {models_pcd.shape}")
+    train_dataset, val_dataset = get_data()
+
+    # with Path("models_pcd.pkl").open("wb") as f:
+    #     pickle.dump(self.models_pcd, f)
 
 
 if __name__ == "__main__":
