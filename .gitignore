@@ -4,3 +4,4 @@ __pycache__/
 PROPS-Pose-Dataset/
 PROPS-Pose-Dataset.tar.gz
 /checkpoints/
+/bpycv_6dof_test
