@@ -85,6 +85,13 @@ def main():
     ax[3].set_title("label[1]: object")
     ax[4].imshow(cetermaps[0:3, :, :].transpose(1, 2, 0), cmap="gray")
     ax[4].set_title("centermaps[0:3]")
+    ax[5].imshow(rgb.transpose(1, 2, 0))
+    # plot bbox
+    for i in range(len(bbx)):
+        x, y, w, h = bbx[i]
+        rect = plt.Rectangle((x, y), w, h, fill=False, edgecolor="r", linewidth=1)
+        ax[5].add_patch(rect)
+    ax[5].set_title("rgb with bbox")
     plt.show()
     # objs_id = data_dict["objs_id"]
     # print(f"objs_id: {objs_id}")
