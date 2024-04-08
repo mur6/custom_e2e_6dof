@@ -59,12 +59,19 @@ def main():
     print(f"objs_id: {objs_id}")  # objs_id: (10,) int16
 
     # bbx: (10, 4) float64
+    bbx = data_dict["bbx"]
+    bbx0 = bbx[0]
     # RTs: (10, 3, 4) float64
+    RTs = data_dict["RTs"]
+    RTs0 = RTs[0]
+    print(f"bbx0: {bbx0}")
+    print(f"RTs0: {RTs0}")
     # centermaps: (30, 480, 640) float64
+    cetermaps = data_dict["centermaps"]
     centers = data_dict["centers"]
 
     depth = data_dict["depth"]
-    fig, axes = plt.subplots(2, 2)
+    fig, axes = plt.subplots(2, 3)
     ax = axes.flatten()
     ax[0].imshow(rgb.transpose(1, 2, 0))
     # plot center
@@ -76,6 +83,8 @@ def main():
     ax[2].set_title("label[0]: background")
     ax[3].imshow(label[1], cmap="gray")
     ax[3].set_title("label[1]: object")
+    ax[4].imshow(cetermaps[0:3, :, :].transpose(1, 2, 0), cmap="gray")
+    ax[4].set_title("centermaps[0:3]")
     plt.show()
     # objs_id = data_dict["objs_id"]
     # print(f"objs_id: {objs_id}")
