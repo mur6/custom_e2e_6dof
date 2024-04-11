@@ -93,7 +93,7 @@ def main():
         posecnn_model.parameters(), lr=0.003, betas=(0.9, 0.999)
     )
     # scheduler = torch.optim.StepLR(optimizer, step_size=8, gamma=0.75)
-    scheduler = torch.optim.ExponentialLR(optimizer, gamma=0.95)
+    scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.95)
     # scheduler = CosineLRScheduler(
     #     optimizer,
     #     t_initial=80,
