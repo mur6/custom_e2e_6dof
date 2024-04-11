@@ -127,7 +127,7 @@ def main():
             train_loss.append(total_loss.item())
 
             if _iter % log_period == 0:
-                lr = optimizer.param_groups[0]["lr"]
+                lr = scheduler.get_last_lr()[0]
                 loss_str = f"[Iter {_iter}][lr: {lr}][loss: {total_loss:.3f}]"
                 for key, value in loss_dict.items():
                     loss_str += f"[{key}: {value:.3f}]"
