@@ -1,5 +1,6 @@
 import os
 import time
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import torch
@@ -47,7 +48,7 @@ else:
     DEVICE = torch.device("cpu")
 
 from utils import PROPSPoseDataset
-from utils import CustomDataset
+from utils import BlenderDataset
 import utils
 
 utils.reset_seed(0)
@@ -66,9 +67,16 @@ def get_data():
     return train_dataset, val_dataset
 
 
+def get_blender_datasets():
+    BPYCV_BASE_DIR = Path("bpycv_6dof_test/data")
+    train_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
+    val_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
+    return train_dataset, val_dataset
+
+
 def main():
-    train_dataset, val_dataset = get_data()
-    dataloader = DataLoader(dataset=train_dataset, batch_size=BATCH_SIZE)
+    train_dataset, val_dataset = get_blender_datasets()
+    dataloader = DataLoader(dataset=train_dataset, batch_size=BATCH_SIZE, shuffle=True)
     posecnn_model = PoseCNN(
         pretrained_backbone=vgg16,
         models_pcd=torch.tensor(train_dataset.models_pcd).to(
