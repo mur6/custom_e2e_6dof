@@ -4,7 +4,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import torch
-import torchvision
+from timm.scheduler import CosineLRScheduler
 
 from p4_helper import *
 from utils import reset_seed
@@ -86,13 +86,26 @@ def main():
     ).to(DEVICE)
     posecnn_model.train()
 
+    # optimizer = torch.optim.Adam(
+    #     posecnn_model.parameters(), lr=0.001, betas=(0.9, 0.999)
+    # )
     optimizer = torch.optim.Adam(
-        posecnn_model.parameters(), lr=0.001, betas=(0.9, 0.999)
+        posecnn_model.parameters(), lr=0.008, betas=(0.9, 0.999)
+    )
+    scheduler = CosineLRScheduler(
+        optimizer,
+        t_initial=90,
+        lr_min=0.0001,
+        warmup_t=4,
+        warmup_lr_init=0.0005,
+        warmup_prefix=True,
     )
 
     loss_history = []
     log_period = 5
     _iter = 0
+    sche_count = 0
+    sche_period = 16
 
     st_time = time.time()
     for epoch in range(10):
@@ -112,12 +125,17 @@ def main():
             train_loss.append(total_loss.item())
 
             if _iter % log_period == 0:
-                loss_str = f"[Iter {_iter}][loss: {total_loss:.3f}]"
+                lr = optimizer.param_groups[0]["lr"]
+                loss_str = f"[Iter {_iter}][lr: {lr}][loss: {total_loss:.3f}]"
                 for key, value in loss_dict.items():
                     loss_str += f"[{key}: {value:.3f}]"
 
                 print(loss_str)
                 loss_history.append(total_loss.item())
+            if _iter % sche_period == 0:
+                scheduler.step(sche_count)
+                sche_count += 1
+
             _iter += 1
 
         print(
