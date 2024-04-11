@@ -91,10 +91,10 @@ class BlenderDataset(Dataset):
         data_dict["rgb"] = rgb.transpose((2, 0, 1))
 
         with Image.open(depth_file) as im:
-            data_dict["depth"] = np.array(im)[np.newaxis, :]
+            data_dict["depth"] = np.array(im)[np.newaxis, :].astype(np.int32)
 
         # assert len(objs_dict) <= self.max_instance_num
-        objs_id = np.zeros(self.max_instance_num, dtype=np.int16)
+        objs_id = np.zeros(self.max_instance_num, dtype=np.int32)
         label = np.zeros((self.max_instance_num + 1, self.H, self.W), dtype=bool)
         bbx = np.zeros((self.max_instance_num, 4))
         RTs = np.zeros((self.max_instance_num, 3, 4))
