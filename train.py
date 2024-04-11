@@ -47,6 +47,7 @@ else:
     DEVICE = torch.device("cpu")
 
 from utils import PROPSPoseDataset
+from utils import CustomDataset
 import utils
 
 utils.reset_seed(0)
