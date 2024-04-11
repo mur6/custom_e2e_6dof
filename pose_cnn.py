@@ -366,8 +366,8 @@ class PoseCNN(nn.Module):
             if bbx_select.shape[0] != 0:
                 pred_Rs, label = self.estimateRotation(quaternion, bbx_select)
                 gt_Rs = self.gtRotation(bbx_select, input_dict)
-                loss_dict["loss_R"] = loss_Rotation(
-                    pred_Rs, gt_Rs, label, self.models_pcd
+                loss_dict["loss_R"] = (
+                    loss_Rotation(pred_Rs, gt_Rs, label, self.models_pcd) * 0.075
                 )
 
             return loss_dict
