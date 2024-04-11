@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import torch
 import torchvision
@@ -52,15 +54,15 @@ def main():
         models_pcd=torch.tensor(val_dataset.models_pcd).to(DEVICE, dtype=torch.float32),
         cam_intrinsic=val_dataset.cam_intrinsic,
     ).to(DEVICE)
-    Path()
-    posecnn_model.load_state_dict(torch.load("posecnn_model.pth"))
+    model_ckpt_path = Path("checkpoints") / "posecnn_model_2_ep_09.pth"
+    posecnn_model.load_state_dict(torch.load(model_ckpt_path))
     num_samples = 5
-    for i in range(num_samples):
+    fig, axes = plt.subplots(1, num_samples, figsize=(20, 10))
+    axes = axes.flatten()
+    for i, ax in enumerate(axes):
         out = eval(posecnn_model, dataloader, DEVICE)
-
-        plt.axis("off")
-        plt.imshow(out)
-        plt.show()
+        ax.imshow(out)
+    plt.show()
 
 
 if __name__ == "__main__":
