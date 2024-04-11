@@ -49,17 +49,29 @@ class BlenderDataset(Dataset):
         self.models_pcd[0] = cube_coords
 
     def __len__(self):
-        return 10  # len(self.all_lst)
+        if self.split == "train":
+            return 512
+        elif self.split == "val":
+            return 256
+        else:
+            raise ValueError(f"Invalid split: {self.split}")
 
-    def __getitem__(self, idx):
+    def __getitem__(self, orig_index):
+        if self.split == "train":
+            index = orig_index
+        elif self.split == "val":
+            index = orig_index + 512
+        else:
+            raise ValueError(f"Invalid split: {self.split}")
+
         def load_as_array(file_p):
             with Image.open(file_p) as im:
                 return np.array(im)
 
-        image_file = self.image_dir / f"{idx:04d}.jpg"
-        mask_file = self.mask_dir / f"mask_{idx:04d}.png"
-        depth_file = self.depth_dir / f"{idx:04d}.png"
-        info_d = np.load(self.info_dir / f"pose_{idx:04d}.npz")
+        image_file = self.image_dir / f"{index:04d}.jpg"
+        mask_file = self.mask_dir / f"mask_{index:04d}.png"
+        depth_file = self.depth_dir / f"{index:04d}.png"
+        info_d = np.load(self.info_dir / f"pose_{index:04d}.npz")
 
         # print(f"info_d: {info_d}")
         # print(f"info_d.keys(): {info_d.keys()}")
