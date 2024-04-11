@@ -90,7 +90,7 @@ def main():
     #     posecnn_model.parameters(), lr=0.001, betas=(0.9, 0.999)
     # )
     optimizer = torch.optim.Adam(
-        posecnn_model.parameters(), lr=0.008, betas=(0.9, 0.999)
+        posecnn_model.parameters(), lr=0.0065, betas=(0.9, 0.999)
     )
     scheduler = CosineLRScheduler(
         optimizer,
