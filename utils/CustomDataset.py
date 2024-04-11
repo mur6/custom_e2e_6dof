@@ -25,13 +25,16 @@ cube_xyz = [
 
 
 class BlenderDataset(Dataset):
-    def __init__(self, BPYCV_BASE_DIR, *, split):
+    def __init__(self, base_dir, *, split):
         self.split = split
-        self.image_dir = BPYCV_BASE_DIR / "images"
-        self.mask_dir = BPYCV_BASE_DIR / "masks"
-        self.depth_dir = BPYCV_BASE_DIR / "depth"
-        self.info_dir = BPYCV_BASE_DIR / "info"
-        self.vector_dir = BPYCV_BASE_DIR / "vectors"
+        dataset_dir = base_dir / split
+        assert dataset_dir.exists(), f"{dataset_dir} does not exist"
+        self.data_count = len(list((dataset_dir / "images").glob("*.jpg")))
+        self.image_dir = dataset_dir / "images"
+        self.mask_dir = dataset_dir / "masks"
+        self.depth_dir = dataset_dir / "depth"
+        self.info_dir = dataset_dir / "info"
+        self.vector_dir = dataset_dir / "vectors"
         ## parameter
         self.max_instance_num = 10
         self.H = 480
@@ -49,21 +52,9 @@ class BlenderDataset(Dataset):
         self.models_pcd[0] = cube_coords
 
     def __len__(self):
-        if self.split == "train":
-            return 512
-        elif self.split == "val":
-            return 256
-        else:
-            raise ValueError(f"Invalid split: {self.split}")
+        return self.data_count
 
-    def __getitem__(self, orig_index):
-        if self.split == "train":
-            index = orig_index
-        elif self.split == "val":
-            index = orig_index + 512
-        else:
-            raise ValueError(f"Invalid split: {self.split}")
-
+    def __getitem__(self, index):
         def load_as_array(file_p):
             with Image.open(file_p) as im:
                 return np.array(im)
@@ -165,5 +156,5 @@ class BlenderDataset(Dataset):
 def get_blender_datasets():
     BPYCV_BASE_DIR = Path("bpycv_6dof_test/data")
     train_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
-    val_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
+    val_dataset = BlenderDataset(BPYCV_BASE_DIR, split="val")
     return train_dataset, val_dataset

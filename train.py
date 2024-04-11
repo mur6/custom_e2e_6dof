@@ -70,7 +70,7 @@ def get_data():
 def get_blender_datasets():
     BPYCV_BASE_DIR = Path("bpycv_6dof_test/data")
     train_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
-    val_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
+    val_dataset = BlenderDataset(BPYCV_BASE_DIR, split="val")
     return train_dataset, val_dataset
 
 
