@@ -10,6 +10,7 @@ from p4_helper import *
 from utils import reset_seed
 from utils.grad import rel_error
 from torch.utils.data import DataLoader
+import numpy as np
 
 import torchvision.models as models
 
@@ -119,7 +120,7 @@ def main():
     sche_period = 4
 
     st_time = time.time()
-    for epoch in range(10):
+    for epoch in range(20):
         train_loss = []
         dataloader.dataset.dataset_type = "train"
         for batch in dataloader:
@@ -162,7 +163,7 @@ def main():
 
         torch.save(
             posecnn_model.state_dict(),
-            os.path.join(PATH, f"posecnn_model_2_ep_{epoch:02d}.pth"),
+            os.path.join(PATH, f"posecnn_model_3_ep_{epoch:02d}.pth"),
         )
 
     plt.title("Training loss history")
