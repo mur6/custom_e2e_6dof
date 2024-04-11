@@ -107,7 +107,7 @@ def main():
     log_period = 5
     _iter = 0
     sche_count = 0
-    sche_period = 16
+    sche_period = 4
 
     st_time = time.time()
     for epoch in range(10):
@@ -134,9 +134,9 @@ def main():
 
                 print(loss_str)
                 loss_history.append(total_loss.item())
-            # if _iter % sche_period == 0:
-            scheduler.step(_iter)
-            # sche_count += 1
+            if _iter % sche_period == 0:
+                scheduler.step(_iter)
+                sche_count += 1
 
             _iter += 1
 
