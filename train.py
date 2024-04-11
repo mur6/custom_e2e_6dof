@@ -149,7 +149,7 @@ def main():
             )
         )
 
-    torch.save(posecnn_model.state_dict(), os.path.join(PATH, "posecnn_model.pth"))
+    torch.save(posecnn_model.state_dict(), os.path.join(PATH, "posecnn_model_2.pth"))
 
     plt.title("Training loss history")
     plt.xlabel(f"Iteration (x {log_period})")
