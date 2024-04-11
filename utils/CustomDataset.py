@@ -12,17 +12,6 @@ from torch.utils.data import Dataset
 
 from rob599 import chromatic_transform, add_noise
 
-cube_xyz = [
-    [3.0, 3.0, 3.0],
-    [3.0, 3.0, -3.0],
-    [3.0, -3.0, 3.0],
-    [3.0, -3.0, -3.0],
-    [-3.0, 3.0, 3.0],
-    [-3.0, 3.0, -3.0],
-    [-3.0, -3.0, 3.0],
-    [-3.0, -3.0, -3.0],
-]
-
 
 class BlenderDataset(Dataset):
     def __init__(self, base_dir, *, split):
@@ -47,6 +36,18 @@ class BlenderDataset(Dataset):
             [[888.8889, 0.0, 320.0], [0.0, 888.8889, 240.0], [0.0, 0.0, 1.0]]
         )
         self.resolution = [640, 480]
+        cube_edge = 0.055
+        cube_edge_half = cube_edge / 2.0
+        cube_xyz = [
+            [cube_edge_half, cube_edge_half, cube_edge_half],
+            [cube_edge_half, cube_edge_half, -cube_edge_half],
+            [cube_edge_half, -cube_edge_half, cube_edge_half],
+            [cube_edge_half, -cube_edge_half, -cube_edge_half],
+            [-cube_edge_half, cube_edge_half, cube_edge_half],
+            [-cube_edge_half, cube_edge_half, -cube_edge_half],
+            [-cube_edge_half, -cube_edge_half, cube_edge_half],
+            [-cube_edge_half, -cube_edge_half, -cube_edge_half],
+        ]
         cube_coords = np.array(cube_xyz)
         self.models_pcd = np.zeros((10, 8, 3))
         self.models_pcd[0] = cube_coords
