@@ -137,7 +137,7 @@ def main():
     plt.xlabel(f"Iteration (x {log_period})")
     plt.ylabel("Loss")
     plt.plot(loss_history)
-    plt.show()
+    plt.savefig("loss_history.png")
 
 
 if __name__ == "__main__":
