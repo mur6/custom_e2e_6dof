@@ -90,16 +90,18 @@ def main():
     #     posecnn_model.parameters(), lr=0.001, betas=(0.9, 0.999)
     # )
     optimizer = torch.optim.Adam(
-        posecnn_model.parameters(), lr=0.0065, betas=(0.9, 0.999)
+        posecnn_model.parameters(), lr=0.003, betas=(0.9, 0.999)
     )
-    scheduler = CosineLRScheduler(
-        optimizer,
-        t_initial=80,
-        lr_min=0.0001,
-        warmup_t=3,
-        warmup_lr_init=0.0005,
-        warmup_prefix=True,
-    )
+    # scheduler = torch.optim.StepLR(optimizer, step_size=8, gamma=0.75)
+    scheduler = torch.optim.ExponentialLR(optimizer, gamma=0.95)
+    # scheduler = CosineLRScheduler(
+    #     optimizer,
+    #     t_initial=80,
+    #     lr_min=0.0001,
+    #     warmup_t=3,
+    #     warmup_lr_init=0.0005,
+    #     warmup_prefix=True,
+    # )
 
     loss_history = []
     log_period = 5
@@ -132,9 +134,9 @@ def main():
 
                 print(loss_str)
                 loss_history.append(total_loss.item())
-            if _iter % sche_period == 0:
-                scheduler.step(sche_count)
-                sche_count += 1
+            # if _iter % sche_period == 0:
+            scheduler.step(_iter)
+            # sche_count += 1
 
             _iter += 1
 
