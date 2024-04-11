@@ -90,10 +90,19 @@ def main():
     #     posecnn_model.parameters(), lr=0.001, betas=(0.9, 0.999)
     # )
     optimizer = torch.optim.Adam(
-        posecnn_model.parameters(), lr=0.0015, betas=(0.9, 0.999)
+        posecnn_model.parameters(), lr=0.001, betas=(0.9, 0.999)
     )
+
     # scheduler = torch.optim.StepLR(optimizer, step_size=8, gamma=0.75)
-    scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.98)
+    # scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.98)
+    def lr_lambda(epoch):
+        if epoch < 3:
+            return 1.2
+        elif epoch < 50:
+            return 1.0
+        return 0.98 ** (epoch - 50)
+
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda)
     # scheduler = CosineLRScheduler(
     #     optimizer,
     #     t_initial=80,
