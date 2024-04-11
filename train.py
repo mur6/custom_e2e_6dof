@@ -97,11 +97,13 @@ def main():
     # scheduler = torch.optim.StepLR(optimizer, step_size=8, gamma=0.75)
     # scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.98)
     def lr_lambda(epoch):
-        if epoch < 3:
-            return 1.2
-        elif epoch < 50:
+        if epoch < 4:
+            return 1.3
+        elif epoch < 8:
+            return 1.15
+        elif epoch < 70:
             return 1.0
-        return 0.98 ** (epoch - 50)
+        return 0.99 ** (epoch - 70)
 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda)
     # scheduler = CosineLRScheduler(
