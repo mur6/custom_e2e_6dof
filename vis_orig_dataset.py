@@ -37,19 +37,7 @@ def get_data():
     return train_dataset, val_dataset
 
 
-def main():
-    # load models_pcd.pkl
-    with Path("checkpoints/models_pcd.pkl").open("rb") as f:
-        models_pcd = pickle.load(f)
-    print(type(models_pcd))
-    print(f"models_pcd: {models_pcd.shape}")
-    train_dataset, val_dataset = get_data()
-    print("===========================")
-    for data_dict in train_dataset:
-        for key, val in data_dict.items():
-            print(f"{key}: {val.shape} {val.dtype}")
-        break
-    print("===========================")
+def visualize_dataset(data_dict):
     rgb = data_dict["rgb"]
     print(f"rgb: shape={rgb.shape} dtype={rgb.dtype}")
     print(f"rgb: min={rgb.min()} max={rgb.max()}")
@@ -99,6 +87,30 @@ def main():
         ax[5].add_patch(rect)
     ax[5].set_title("rgb with bbox")
     plt.show()
+
+
+def main_for_dataset():
+    train_dataset, val_dataset = get_data()
+    print("===========================")
+    for data_dict in train_dataset:
+        for key, val in data_dict.items():
+            print(f"{key}: {val.shape} {val.dtype}")
+        break
+    print("===========================")
+
+
+def load_models_pcd():
+    # load models_pcd.pkl
+    with Path("checkpoints/models_pcd.pkl").open("rb") as f:
+        models_pcd = pickle.load(f)
+    print(type(models_pcd))
+    print(f"models_pcd: {models_pcd}")
+    # min/ max
+    print(f"min: {models_pcd.min()} max: {models_pcd.max()}")
+
+
+def main():
+    load_models_pcd()
 
 
 if __name__ == "__main__":

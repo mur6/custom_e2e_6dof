@@ -85,11 +85,8 @@ def visualize_dataset(data_dict):
 
 
 def main():
-    # with Path("checkpoints/models_pcd.pkl").open("rb") as f:
-    #     models_pcd = pickle.load(f)
-    # print(f"models_pcd: shape={models_pcd.shape} dtype={models_pcd.dtype}")
     train_dataset, val_dataset = get_blender_datasets()
-    train_dataset.models_pcd
+    models_pcd = train_dataset.models_pcd
     print(f"train_dataset.models_pcd: shape={train_dataset.models_pcd}")
     for i, data_dict in enumerate(train_dataset):
         print(f"i: {i}")
