@@ -103,7 +103,9 @@ def main():
             return 1.15
         elif epoch < 70:
             return 1.0
-        return 0.99 ** (epoch - 70)
+        elif epoch < 140:
+            return 0.95
+        return 0.99 ** (epoch - 140)
 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda)
     # scheduler = CosineLRScheduler(
