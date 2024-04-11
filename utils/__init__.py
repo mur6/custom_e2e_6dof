@@ -9,4 +9,4 @@ from .utils import (
     format_gt_RTs,
 )
 from .PROPSPoseDataset import PROPSPoseDataset
-from .CustomDataset import BlenderDataset
+from .CustomDataset import BlenderDataset, get_blender_datasets
