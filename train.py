@@ -94,9 +94,9 @@ def main():
     )
     scheduler = CosineLRScheduler(
         optimizer,
-        t_initial=90,
+        t_initial=80,
         lr_min=0.0001,
-        warmup_t=4,
+        warmup_t=3,
         warmup_lr_init=0.0005,
         warmup_prefix=True,
     )
