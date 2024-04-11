@@ -22,14 +22,7 @@ from pose_cnn import (
     RotationBranch,
 )
 
-from utils import BlenderDataset
-
-
-def get_blender_datasets():
-    BPYCV_BASE_DIR = Path("bpycv_6dof_test/data")
-    train_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
-    val_dataset = BlenderDataset(BPYCV_BASE_DIR, split="train")
-    return train_dataset, val_dataset
+from utils import BlenderDataset, get_blender_datasets
 
 
 def visualize_dataset(data_dict):
@@ -93,7 +86,7 @@ def main():
         if i == 0:
             break
     print("===========================")
-    # visualize_dataset(data_dict)
+    visualize_dataset(data_dict)
 
 
 if __name__ == "__main__":
