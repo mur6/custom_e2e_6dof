@@ -12,6 +12,17 @@ from torch.utils.data import Dataset
 
 from rob599 import chromatic_transform, add_noise
 
+cube_xyz = [
+    [3.0, 3.0, 3.0],
+    [3.0, 3.0, -3.0],
+    [3.0, -3.0, 3.0],
+    [3.0, -3.0, -3.0],
+    [-3.0, 3.0, 3.0],
+    [-3.0, 3.0, -3.0],
+    [-3.0, -3.0, 3.0],
+    [-3.0, -3.0, -3.0],
+]
+
 
 class BlenderDataset(Dataset):
     def __init__(self, BPYCV_BASE_DIR, *, split):
@@ -33,6 +44,9 @@ class BlenderDataset(Dataset):
             [[888.8889, 0.0, 320.0], [0.0, 888.8889, 240.0], [0.0, 0.0, 1.0]]
         )
         self.resolution = [640, 480]
+        cube_coords = np.array(cube_xyz)
+        self.models_pcd = np.zeros((10, 8, 3))
+        self.models_pcd[0] = cube_coords
 
     def __len__(self):
         return 10  # len(self.all_lst)
