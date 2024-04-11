@@ -85,15 +85,16 @@ def visualize_dataset(data_dict):
 
 
 def main():
-    # with Path("checkpoints/models_pcd.pkl").open("rb") as f:
-    #     models_pcd = pickle.load(f)
-    # print(f"models_pcd: {models_pcd.shape}")
+    with Path("checkpoints/models_pcd.pkl").open("rb") as f:
+        models_pcd = pickle.load(f)
+    print(f"models_pcd: {models_pcd.shape}")
     train_dataset, val_dataset = get_blender_datasets()
     for i, data_dict in enumerate(train_dataset):
-        if i == 3:
+        print(f"i: {i}")
+        if i == 0:
             break
     print("===========================")
-    visualize_dataset(data_dict)
+    # visualize_dataset(data_dict)
 
 
 if __name__ == "__main__":
