@@ -90,7 +90,7 @@ def main():
     #     posecnn_model.parameters(), lr=0.001, betas=(0.9, 0.999)
     # )
     optimizer = torch.optim.Adam(
-        posecnn_model.parameters(), lr=0.003, betas=(0.9, 0.999)
+        posecnn_model.parameters(), lr=0.0015, betas=(0.9, 0.999)
     )
     # scheduler = torch.optim.StepLR(optimizer, step_size=8, gamma=0.75)
     scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.98)
