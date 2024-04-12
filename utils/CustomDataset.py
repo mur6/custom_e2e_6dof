@@ -32,8 +32,9 @@ class BlenderDataset(Dataset):
         # self.cam_intrinsic = np.array(
         #     [[902.19, 0.0, 342.35], [0.0, 902.39, 252.23], [0.0, 0.0, 1.0]]
         # )
+        fx = fy = 2.311e03
         self.cam_intrinsic = np.array(
-            [[888.8889, 0.0, 320.0], [0.0, 888.8889, 240.0], [0.0, 0.0, 1.0]]
+            [[fx, 0.0, 320.0], [0.0, fy, 240.0], [0.0, 0.0, 1.0]]
         )
         self.resolution = [640, 480]
         cube_edge = 0.055

@@ -54,15 +54,24 @@ def main():
         models_pcd=torch.tensor(val_dataset.models_pcd).to(DEVICE, dtype=torch.float32),
         cam_intrinsic=val_dataset.cam_intrinsic,
     ).to(DEVICE)
+    posecnn_model.eval()
     model_ckpt_path = Path("checkpoints") / "posecnn_model_2_ep_09.pth"
     state_dict = torch.load(model_ckpt_path, map_location=DEVICE)
     posecnn_model.load_state_dict(state_dict=state_dict)
-    num_samples = 5
+    num_samples = 2
     fig, axes = plt.subplots(1, num_samples, figsize=(20, 10))
     axes = axes.flatten()
-    for i, ax in enumerate(axes):
-        out = eval(posecnn_model, dataloader, DEVICE)
-        ax.imshow(out)
+    for i, data_dict in enumerate(dataloader):
+        output_dict, segmentation = posecnn_model(data_dict)
+        # print(f"seg: {type(segmentation)}, out: {type(output_dict)}")
+        mask = segmentation.cpu().numpy()
+        for key, val in output_dict.items():
+            print(f"{key}: {val}")
+        print(f"mask: {mask.shape}")
+        ax = axes[i]
+        ax.imshow(mask[0])
+        if i == num_samples - 1:
+            break
     plt.show()
 
 
