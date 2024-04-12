@@ -55,7 +55,8 @@ def main():
         cam_intrinsic=val_dataset.cam_intrinsic,
     ).to(DEVICE)
     model_ckpt_path = Path("checkpoints") / "posecnn_model_2_ep_09.pth"
-    posecnn_model.load_state_dict(torch.load(model_ckpt_path))
+    state_dict = torch.load(model_ckpt_path, map_location=DEVICE)
+    posecnn_model.load_state_dict(state_dict=state_dict)
     num_samples = 5
     fig, axes = plt.subplots(1, num_samples, figsize=(20, 10))
     axes = axes.flatten()
