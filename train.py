@@ -1,3 +1,4 @@
+import argparse
 import os
 import time
 from pathlib import Path
@@ -75,7 +76,7 @@ def get_blender_datasets():
     return train_dataset, val_dataset
 
 
-def main():
+def main(start_checkpoint_path):
     train_dataset, val_dataset = get_blender_datasets()
     dataloader = DataLoader(dataset=train_dataset, batch_size=BATCH_SIZE, shuffle=True)
     posecnn_model = PoseCNN(
@@ -85,6 +86,9 @@ def main():
         ),
         cam_intrinsic=train_dataset.cam_intrinsic,
     ).to(DEVICE)
+    if start_checkpoint_path is not None:
+        state_dict = torch.load(start_checkpoint_path)
+        posecnn_model.load_state_dict(state_dict=state_dict)
     posecnn_model.train()
 
     # optimizer = torch.optim.Adam(
@@ -103,9 +107,9 @@ def main():
             return 1.15
         elif epoch < 70:
             return 1.0
-        elif epoch < 140:
+        elif epoch < 125:
             return 0.95
-        return 0.99 ** (epoch - 140)
+        return 0.999 ** (epoch - 125)
 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda)
     # scheduler = CosineLRScheduler(
@@ -167,7 +171,7 @@ def main():
 
         torch.save(
             posecnn_model.state_dict(),
-            os.path.join(PATH, f"posecnn_model_3_ep_{epoch:02d}.pth"),
+            os.path.join(PATH, f"posecnn_model_0412_ep_{epoch:02d}.pth"),
         )
 
     plt.title("Training loss history")
@@ -178,4 +182,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--start_checkpoint_path",
+        type=str,
+        default=None,
+        help="Path to the checkpoint to start training from",
+    )
+    args = parser.parse_args()
+    main(args.start_checkpoint_path)
