@@ -111,7 +111,16 @@ def main(start_checkpoint_path):
             return 0.95
         return 0.999 ** (epoch - 125)
 
-    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda)
+    def lr_lambda_v2(epoch):
+        if epoch < 4:
+            return 1.3
+        elif epoch < 8:
+            return 1.15
+        elif epoch < 40:
+            return 1.0
+        return 0.995 ** (epoch - 40)
+
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda_v2)
     # scheduler = CosineLRScheduler(
     #     optimizer,
     #     t_initial=80,
